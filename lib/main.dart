@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,11 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
   String temperature = "Temperature: --°C";
   String weatherCondition = "Condition: --";
 
+  final List<String> weatherConditions = ["Sunny", "Cloudy", "Rainy"];
+  final Random _random = Random();
+
   void _fetchWeather() {
     setState(() {
       cityName = _cityController.text.isNotEmpty ? _cityController.text : "Unknown City";
-      temperature = "Temperature: 25°C"; // Placeholder value
-      weatherCondition = "Condition: Sunny"; // Placeholder value
+      int temp = 15 + _random.nextInt(16); // Generates a random temperature between 15 and 30
+      String condition = weatherConditions[_random.nextInt(weatherConditions.length)];
+
+      temperature = "Temperature: $temp°C";
+      weatherCondition = "Condition: $condition";
     });
   }
 
