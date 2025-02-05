@@ -30,9 +30,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cityController = TextEditingController();
-  String cityName = "City Name";
-  String temperature = "Temperature: --°C";
-  String weatherCondition = "Condition: --";
+  String cityName = "";
+  String temperature = "";
+  String weatherCondition = "";
 
   final List<String> weatherConditions = ["Sunny", "Cloudy", "Rainy"];
   final Random _random = Random();
@@ -43,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
       int temp = 15 + _random.nextInt(16); // Generates a random temperature between 15 and 30
       String condition = weatherConditions[_random.nextInt(weatherConditions.length)];
 
-      temperature = "Temperature: $temp°C";
-      weatherCondition = "Condition: $condition";
+      temperature = "$temp°C";
+      weatherCondition = condition;
     });
   }
 
@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextField(
               controller: _cityController,
@@ -70,20 +71,23 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Text("Fetch Weather"),
             ),
             const SizedBox(height: 32),
-            Text(
-              cityName,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              temperature,
-              style: const TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              weatherCondition,
-              style: const TextStyle(fontSize: 18),
-            ),
+
+            if (cityName.isNotEmpty) ...[
+              Text(
+                "City: $cityName",
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Temperature: $temperature",
+                style: const TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Condition: $weatherCondition",
+                style: const TextStyle(fontSize: 18),
+              ),
+            ],
           ],
         ),
       ),
